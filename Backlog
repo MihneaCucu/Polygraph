@@ -1,0 +1,28 @@
+	1.	Analiza textului știrii
+	•	Extrage textul principal al articolului.
+	•	Împarte conținutul în propoziții și analizează structura acestora.
+	2.	Clasificare Fake News vs. Real News
+	•	Algoritmi de machine learning care determină dacă articolul este fake sau real.
+	•	Modele bazate pe NLP care detectează pattern-uri comune în știrile false (ex: exagerări, lipsa surselor, limbaj emoțional).
+	3.	Verificarea surselor
+	•	Compară site-ul articolului cu o bază de date de surse verificate (Media Bias/Fact Check, Open Sources).
+	•	Avertizează utilizatorul dacă sursa este cunoscută pentru știri false.
+	4.	Comparare cu știri de încredere
+	•	Caută subiecte similare pe site-uri de știri verificate și compară faptele prezentate.
+	•	Notifică utilizatorul dacă există diferențe semnificative între versiuni.
+	5.	Analiza sentimentului articolului
+	•	Detectează tonul știrii (neutru, alarmist, foarte negativ sau exagerat pozitiv).
+	•	Știrile false tind să folosească limbaj emoțional puternic pentru manipulare.
+	6.	Interfață Web pentru utilizatori
+	•	Un UI unde utilizatorii pot introduce un link sau un text de articol pentru analiză.
+	•	Oferă un scor de credibilitate (ex: 0% – foarte fake, 100% – foarte credibil).
+
+
+Arhitectura Aplicației
+	1.	Utilizatorul introduce un link sau un text de articol.
+	2.	Backend-ul preia articolul și îl analizează:
+	•	Tokenizare și curățare text.
+	•	Detectarea sursei și verificarea în baza de date.
+	•	Compararea conținutului cu știri similare.
+	•	Analiza sentimentului și clasificarea fake vs. real.
+	3.	Returnează utilizatorului un scor de credibilitate + argumente.
