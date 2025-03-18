@@ -12,7 +12,7 @@
 	•	Notifică utilizatorul dacă există diferențe semnificative între versiuni.
 	5.	Interfață Web pentru utilizatori
 	•	Un UI unde utilizatorii pot introduce un link sau un text de articol pentru analiză.
-	•	Oferă un scor de credibilitate (ex: 0% – foarte fake, 100% – foarte credibil).
+	•	Oferă un scor de credibilitate (ex: 0% – complet fake, 100% – foarte credibil).
 
 
 Arhitectura Aplicației
