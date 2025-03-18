@@ -16,6 +16,7 @@
 
 
 Arhitectura Aplicației
+
 	1.	Utilizatorul introduce un link sau un text de articol.
 	2.	Backend-ul preia articolul și îl analizează:
 	•	Tokenizare și curățare text.
