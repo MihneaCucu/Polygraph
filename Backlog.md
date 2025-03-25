@@ -1,38 +1,49 @@
 	1.	Analiza textului știrii
 	•	Extrage textul principal al articolului.
 	•	Împarte conținutul în propoziții și analizează structura acestora.
+ 
 	2.	Clasificare Fake News vs. Real News
 	•	Algoritmi de machine learning care determină dacă articolul este fake sau real.
 	•	Modele bazate pe NLP care detectează pattern-uri comune în știrile false (ex: exagerări, lipsa surselor, limbaj emoțional).
+ 
 	3.	Verificarea surselor
 	•	Compară site-ul articolului cu o bază de date de surse verificate (Media Bias/Fact Check, Open Sources).
 	•	Avertizează utilizatorul dacă sursa este cunoscută pentru știri false.
+ 
 	4.	Comparare cu știri de încredere
 	•	Caută subiecte similare pe site-uri de știri verificate și compară faptele prezentate.
 	•	Notifică utilizatorul dacă există diferențe semnificative între versiuni.
+ 
 	5. 	Analiză detaliată și raport explicativ
  	•	Generează un raport cu argumente pro și contra pentru credibilitatea articolului.
 	•	Explică ce factori au influențat scorul final.
 	•	Evidențiază limbajul emoțional, lipsa surselor și alte trăsături problematice.
+ 
 	6.	Interfață Web pentru utilizatori
 	•	Un UI unde utilizatorii pot introduce un link sau un text de articol pentru analiză.
 	•	Oferă un scor de credibilitate (ex: 0% – complet fake, 100% – foarte credibil).
+ 
  	7. 	Acces la sursele folosite pentru verificare
   	•	Listează toate sursele folosite pentru verificare.
 	•	Oferă link-uri către articolele relevante.
 	•	Explică metodologia de selecție a surselor.
+ 
  	8.	 Sugestii de surse alternative
   	•	Creează un mecanism care sugerează surse alternative de încredere.
 	•	Prioritizează surse diverse pentru o perspectivă echilibrată.
+ 
  	9.	 Setări avansate pentru administratori
   	•	Adaugă setări pentru pragurile scorului de credibilitate.
 	•	Permite ajustarea sensibilității algoritmului.
+ 
  	10. 	Rezumat automatizat al articolelor
   	•	Utilizează NLP pentru a extrage esențialul din articol.
 	•	Afișează principalele puncte sub formă de listă.
+ 
  	11.	 Istoricul verificărilor
   	•	Creează o pagină unde utilizatorul vede ultimele articole analizate.
 	•	Permite ștergerea manuală a istoricului.
+ 
  	12. 	Raportarea analizelor incorecte
   	•	Adaugă un buton „Raportează evaluarea” în UI.
 	•	Creează un sistem de feedback pentru ajustarea modelului.
