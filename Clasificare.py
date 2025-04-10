@@ -82,7 +82,7 @@ if __name__ == "__main__":
     dataset_path = sys.argv[1]
     txt_file_path = sys.argv[2]
 
-    print("🔄 Încărcare și antrenare model...")
+    print("🔄 Încarcare și antrenare model...")
     data = load_dataset(dataset_path)
     model = train_model(data)
 
