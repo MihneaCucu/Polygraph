@@ -76,7 +76,7 @@ def predict_from_file(model, file_path):
 # ========================
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Folosește: python Clasificare.py <cale_catre_dataset> <fisier_txt>")
+        print("Foloseste: python Clasificare.py <cale_catre_dataset> <fisier_txt>")
         sys.exit(1)
 
     dataset_path = sys.argv[1]
