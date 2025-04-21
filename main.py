@@ -13,14 +13,18 @@ def actualizare(dict, word):
             dict.update({word: (1, 0)})
         else:
             dict[word] = (dict[word][0] + 1, 0)
+
+#Actualizeaza dictionarul pasat ca argument, plasand pe pozitia a doua a tuplului procentajul aparitiilor cuvantului cheie in text
 def procentaje_cuvinte(dict):
     cuv_total = sum([el[0] for el in dict.values()])
     for key in dict.keys():
         dict[key] = (dict[key][0], dict[key][0] / cuv_total * 100)
+#Afiseaza cuvintele in ordinea numarului aparitiilor in text
 def afisare_cuvinte(dict):
     sorted_items = sorted(dict.items(), key=lambda item: item[1][1], reverse = True)
     for (key, value) in sorted_items:
         print(key, value[0], "aparitii", value[1], "%")
+#Construieste dictionarul cu cuvintele din text
 def analiza_text(text, propozitii):
     dict = {}
     simb_final_prop = [".", "!", "?"]
@@ -47,6 +51,7 @@ def actualizeaza_total(d_total, d):
         else:
             d_total.update({cheie: d[cheie]})
     return d_total
+#Construieste dictionarul celor mai folosite cuvinte din limba engleza
 def construieste_dict_comune():
     dict_words = {}
     path = "unigram_freq.csv"
@@ -62,6 +67,7 @@ def construieste_dict_comune():
     for key in dict_words.keys():
         dict_words[key] /= total_words
     return dict_words
+#Compara frecventa aparitiei cuvintelor in textul nostru cu frecventa lor in limba engleza
 def comparare_cuvinte(dict_cuv, dict_words):
     dict_comp = {}
     for key in dict_cuv.keys():
@@ -70,7 +76,7 @@ def comparare_cuvinte(dict_cuv, dict_words):
     sorted_items = sorted(dict_comp.items(), key=lambda item: item[1], reverse=True)
     for (key, value) in sorted_items:
         print(key, "apare cu factorul de", value)
-
+#Extragem textul de la linkul specificat in variabila URL
 url = 'https://www.bbc.com/sport/formula1/articles/cgenqvv9309o'
 article = Article(url)
 article.download()
