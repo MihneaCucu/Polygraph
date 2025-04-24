@@ -17,6 +17,28 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
+from textblob import TextBlob
+
+def preprocess_text(text):
+    text = text.lower()
+    text = text.translate(str.maketrans("", "", string.punctuation))
+    return text
+
+def analyze_sentiment(text):
+    analysis = TextBlob(text)
+    sentiment = analysis.sentiment.polarity
+    return sentiment
+
+def detect_exaggeration(text):
+    exaggeration_words = ["always", "never", "everyone", "nobody", "all", "none", "incredbile", "unbelievable", "shocking"]
+    count = sum(word in text.lower() for word in exaggeration_words)
+    return count > 0
+
+def check_sources(text):
+    unreliable_phrases = ["according to", "sources say", "experts claim", "some people say", "anonymous"]
+    count = sum(phrase in text.lower() for phrase in unreliable_phrases)
+    return count > 0
+
 def load_dataset(dataset_path):
     true_df = pd.read_csv('/Users/mihneacucu/Documents/MDS/True.csv')
     fake_df = pd.read_csv('/Users/mihneacucu/Documents/MDS/Fake.csv')
@@ -29,7 +51,7 @@ def load_dataset(dataset_path):
     return data
 
 def train_model(data):
-    X = data["text"]
+    X = data["text"].apply(preprocess_text)
     y = data["label"]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -49,30 +71,65 @@ def predict_from_file(model, file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             text = f.read()
+        text = preprocess_text(text)
         prediction = model.predict([text])[0]
         prob = model.predict_proba([text])[0][prediction]
-        threshold = 0.75  # Prag pentru probabilitate
+        probabilities = model.predict_proba([text])[0]
+        print(f"Probabilities: REAL={probabilities[1] * 100:.2f}%, FAKE={probabilities[0] * 100:.2f}%")
+        threshold = 0.70  # Prag pentru probabilitate
         if prob >= threshold:
             if prediction == 1:
-                print(f"Stirea este probabil REALA ({prob*100:.2f}%)")
+                print(f"The news is likely TRUE ({prob*100:.2f}%)")
             else:
-                print(f"Stirea este probabil FALSA ({prob*100:.2f}%)")
+                print(f"The news is likely FAKE ({prob*100:.2f}%)")
         else:
-            print(f"Predictia nu este sigura. Probabilitatea este prea mica ({prob*100:.2f}%).")
+            print(f"Probability is too low ({prob*100:.2f}%).")
     except FileNotFoundError:
-        print("Fisierul .txt nu a fost gasit.")
+        print("File not found")
+
+def predict_from_file_with_nlp(model, file_path):
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            text = f.read()
+        text = preprocess_text(text)
+
+        # Model prediction
+        prediction = model.predict([text])[0]
+        prob = model.predict_proba([text])[0][prediction]
+        probabilities = model.predict_proba([text])[0]
+
+        # NLP analyses
+        sentiment = analyze_sentiment(text)
+        has_exaggeration = detect_exaggeration(text)
+        lacks_sources = check_sources(text)
+
+        print(f"Probabilities: REAL={probabilities[1] * 100:.2f}%, FAKE={probabilities[0] * 100:.2f}%")
+        print(f"Sentiment Polarity: {sentiment:.2f}")
+        print(f"Exaggeration Detected: {'Yes' if has_exaggeration else 'No'}")
+        print(f"Lacks Reliable Sources: {'Yes' if lacks_sources else 'No'}")
+
+        threshold = 0.70  # Probability threshold
+        if prob >= threshold:
+            if prediction == 1:
+                print(f"The news is likely REAL ({prob*100:.2f}%)")
+            else:
+                print(f"The news is likely FAKE ({prob*100:.2f}%)")
+        else:
+            print(f"The prediction is uncertain. Probability is too low ({prob*100:.2f}%).")
+    except FileNotFoundError:
+        print("The .txt file was not found.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Foloseste: python Clasificare.py <cale_catre_dataset> <fisier_txt>")
+        print("Use: python Clasificare.py <path_to_dataset> <file.txt>")
         sys.exit(1)
 
     dataset_path = sys.argv[1]
     txt_file_path = sys.argv[2]
 
-    print("Incarcare si antrenare model...")
+    print("Loading model...")
     data = load_dataset(dataset_path)
     model = train_model(data)
 
-    print("\nAnalizam fisierul de input...")
-    predict_from_file(model, txt_file_path)
+    print("\nAnalysing input...")
+    predict_from_file_with_nlp(model, txt_file_path)
