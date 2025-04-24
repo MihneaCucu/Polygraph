@@ -1,4 +1,1 @@
-Title: The Earth orbits the Sun
-
-Text:
-“The Earth orbits the Sun once every 365.25 days, completing a full orbit each year. This movement, known as the Earth’s revolution, is responsible for the cycle of seasons. The orbit of the Earth is elliptical, with the Sun at one of the two foci of the ellipse. This scientific fact is confirmed by centuries of astronomical observations and research.”
+The Earth orbits the Sun once every 365.25 days, completing a full orbit each year. This movement, known as the Earth’s revolution, is responsible for the cycle of seasons. The orbit of the Earth is elliptical, with the Sun at one of the two foci of the ellipse. This scientific fact is confirmed by centuries of astronomical observations and research.

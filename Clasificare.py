@@ -17,9 +17,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
-# ========================
-# Încărcare dataset
-# ========================
 def load_dataset(dataset_path):
     true_df = pd.read_csv('/Users/mihneacucu/Documents/MDS/True.csv')
     fake_df = pd.read_csv('/Users/mihneacucu/Documents/MDS/Fake.csv')
@@ -31,9 +28,6 @@ def load_dataset(dataset_path):
     data = data.sample(frac=1).reset_index(drop=True)  # amestecare
     return data
 
-# ========================
-# Antrenare model
-# ========================
 def train_model(data):
     X = data["text"]
     y = data["label"]
@@ -51,9 +45,6 @@ def train_model(data):
 
     return pipeline
 
-# ========================
-# Predicție pe un fișier .txt
-# ========================
 def predict_from_file(model, file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -63,17 +54,14 @@ def predict_from_file(model, file_path):
         threshold = 0.75  # Prag pentru probabilitate
         if prob >= threshold:
             if prediction == 1:
-                print(f"✅ Știrea este probabil REALĂ ({prob*100:.2f}%)")
+                print(f"Stirea este probabil REALA ({prob*100:.2f}%)")
             else:
-                print(f"⚠️ Știrea este probabil FALSĂ ({prob*100:.2f}%)")
+                print(f"Stirea este probabil FALSA ({prob*100:.2f}%)")
         else:
-            print(f"⚠️ Predicția nu este sigură. Probabilitatea este prea mică ({prob*100:.2f}%).")
+            print(f"Predictia nu este sigura. Probabilitatea este prea mica ({prob*100:.2f}%).")
     except FileNotFoundError:
-        print("Fișierul .txt nu a fost găsit.")
+        print("Fisierul .txt nu a fost gasit.")
 
-# ========================
-# Main
-# ========================
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Foloseste: python Clasificare.py <cale_catre_dataset> <fisier_txt>")
@@ -82,9 +70,9 @@ if __name__ == "__main__":
     dataset_path = sys.argv[1]
     txt_file_path = sys.argv[2]
 
-    print("🔄 Incarcare si antrenare model...")
+    print("Incarcare si antrenare model...")
     data = load_dataset(dataset_path)
     model = train_model(data)
 
-    print("\n🔍 Analizam fisierul de input...")
+    print("\nAnalizam fisierul de input...")
     predict_from_file(model, txt_file_path)
