@@ -1,6 +1,11 @@
 import requests
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import re
+
+def normalize_text(text):
+    text = re.sub(r'\W+', ' ', text)
+    return text.strip().lower()
 
 def search_trusted_news(api_key, query):
     url = f"https://newsapi.org/v2/everything?q={query}&language=en&sortBy=relevancy&apiKey={api_key}"
