@@ -1,5 +1,6 @@
-
+import identificator_bias
 from newspaper import Article
+import csv
 def func_sort(el):
     return el[1]
 def actualizare(dict, word):
@@ -23,7 +24,7 @@ def procentaje_cuvinte(dict):
 def afisare_cuvinte(dict):
     sorted_items = sorted(dict.items(), key=lambda item: item[1][1], reverse = True)
     for (key, value) in sorted_items:
-        print(key, value[0], "aparitii", value[1], "%")
+        print(key, value[0], "appearances", value[1], "%")
 #Construieste dictionarul cu cuvintele din text
 def analiza_text(text, propozitii):
     dict = {}
@@ -54,28 +55,31 @@ def actualizeaza_total(d_total, d):
 #Construieste dictionarul celor mai folosite cuvinte din limba engleza
 def construieste_dict_comune():
     dict_words = {}
+    total_words = 0
     path = "unigram_freq.csv"
     words_file = open(path)
-    raw_text = words_file.read()
-    words = raw_text.split("\n")
-    total_words = 0
-    for pair in words:
-        p = pair.split(',')
-        if len(p) == 2 and p[1].isnumeric():
-            dict_words[p[0].upper()] = int(p[1])
-            total_words += int(p[1])
+    reader = csv.DictReader(words_file)
+    for row in reader:
+        dict_words[row['word'].upper()] = int(row['count'])
+        total_words += int(row['count'])
     for key in dict_words.keys():
         dict_words[key] /= total_words
     return dict_words
 #Compara frecventa aparitiei cuvintelor in textul nostru cu frecventa lor in limba engleza
-def comparare_cuvinte(dict_cuv, dict_words):
+def comparare_cuvinte(dict_cuv, dict_comune):
     dict_comp = {}
     for key in dict_cuv.keys():
-        if key in dict_words.keys():
-            dict_comp[key] = dict_cuv[key][1] / dict_words[key]
+        if key in dict_comune.keys():
+            dict_comp[key] = dict_cuv[key][1] / dict_comune[key]
     sorted_items = sorted(dict_comp.items(), key=lambda item: item[1], reverse=True)
     for (key, value) in sorted_items:
-        print(key, "apare cu factorul de", value)
+        print(key, "appears with a factor of", value)
+def extrage_sursa(url):
+    surse = url.split('/')[2].split('.')
+    if surse[0] == 'www':
+        return surse[1].lower()
+    else:
+        return surse[0].lower()
 #Extragem textul de la linkul specificat in variabila URL
 url = 'https://www.bbc.com/sport/formula1/articles/cgenqvv9309o'
 article = Article(url)
@@ -85,5 +89,7 @@ propozitii = []
 text = article.text
 dict_cuvinte = analiza_text(text, propozitii)
 procentaje_cuvinte(dict_cuvinte)
-dict_words = construieste_dict_comune()
-comparare_cuvinte(dict_cuvinte, dict_words)
+dict_comune = construieste_dict_comune()
+comparare_cuvinte(dict_cuvinte, dict_comune)
+sursa = extrage_sursa(url)
+identificator_bias.review(sursa)
