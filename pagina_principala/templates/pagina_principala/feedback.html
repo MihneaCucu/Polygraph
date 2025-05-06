@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FEEDBACK APLICATIE</title>
+    <link rel="stylesheet" href={% static 'styles/styles.css' %}
+</head>
+<body>
+    <h1>Formular Feedback</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Trimite</button>
+    </form>
+    <footer>
+        <p>&copy; 2025 Polygraph. All rights reserved.</p>
+    </footer>
+    <img src="{% static 'images/logo.png' %}" alt="Logo Polygraph" class="logo">
+</body>
+</html>
