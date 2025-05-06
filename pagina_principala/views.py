@@ -98,7 +98,7 @@ def result_view(request):
 
     print("\nAnalysing input...")
     predictie_stire = predict_from_file_with_nlp(model, text)
-    print(predictie_stire)
+    #print(predictie_stire)
     
     # Afisare tip de continut folosit
     print(f"S-a folosit {input_type}: {content[:100]}")
