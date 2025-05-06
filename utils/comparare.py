@@ -28,9 +28,9 @@ def compare_with_trusted_news(input_text, trusted_articles):
 
 def notify_user(similarity, threshold=0.7):
     if similarity >= threshold:
-        print(f"The news is consistent with trusted sources (similarity: {similarity:2f}).")
+        return (f"The news is consistent with trusted sources (similarity: {similarity:2f}).")
     else:
-        print(f"Significant differences found compared to trusted sources (similarity: {similarity:2f}).")
+        return (f"Significant differences found compared to trusted sources (similarity: {similarity:2f}).")
 
 if __name__ == "__main__":
     api_key = "d8252bbbbe28439abf4d9739288dde30"

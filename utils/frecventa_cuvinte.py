@@ -34,7 +34,7 @@ def analiza_text(text, propozitii):
     simb_final_prop = [".", "!", "?"]
     simb_blank = [" ", "\n", "\r"]
     ultimul_semn_de_pct = -1
-    for i in range(len(text)):
+    for i in range(len(text)-1):
         if text[i] in simb_final_prop and text[i+1] in simb_blank:
             propozitii.append(text[ultimul_semn_de_pct + 1:i + 1])
             ultimul_semn_de_pct = i
@@ -81,15 +81,15 @@ def comparare_cuvinte(dict_cuv, dict_comune):
         if key in dict_comune.keys():
             dict_comp[key] = dict_cuv[key][1] / dict_comune[key]
     sorted_items = sorted(dict_comp.items(), key=lambda item: item[1], reverse=True)
-    for (key, value) in sorted_items:
-        print(key, "appears with a factor of", value)
+    s = ""
+    freq = []
+    for (key, value) in sorted_items[:5]:
+        freq.append(f"{key}, appears with a factor of {value}")
+    for i in range(4):
+        s += sorted_items[i][0] + " OR "
+    s += sorted_items[4][0]
+    return s, freq
 
-def extrage_sursa(url):
-    surse = url.split('/')[2].split('.')
-    if surse[0] == 'www':
-        return surse[1].lower()
-    else:
-        return surse[0].lower()
 
 if __name__ == "__main__":
     #Extragem textul de la linkul specificat in variabila URL
@@ -103,5 +103,5 @@ if __name__ == "__main__":
     procentaje_cuvinte(dict_cuvinte)
     dict_comune = construieste_dict_comune()
     comparare_cuvinte(dict_cuvinte, dict_comune)
-    sursa = extrage_sursa(url)
-    #identificator_bias.review(sursa)
+    # sursa = extrage_sursa(url)
+    # identificator_bias.review(sursa)

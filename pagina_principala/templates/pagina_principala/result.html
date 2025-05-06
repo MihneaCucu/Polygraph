@@ -20,7 +20,27 @@
         </section>
         <section>
             <h1>Articolul:</h1>
-            <p>{{ text }}</p>
+            <p>{{ text }}...</p>
+        </section>
+        <section>
+            <h1>Incredere sursa:</h1>
+            <p>{{ incredere_sursa }}</p>
+        </section>
+        <section>
+            <h1>Cele mai utilizate cuvinte din articol:</h1>
+            {% for item in frecventa %}
+                <p>{{ item }}</p>
+            {% endfor %}
+        </section>
+        <section>
+            <h1>Comparare cu alte stiri din surse de incredre:</h1>
+            <p>{{ comparare_stiri }}</p>
+        </section>
+        <section>
+            <h1>Comparare cu alte stiri din surse de incredre:</h1>
+            {% for item in predictie_stire %}
+                <p>{{ item }}</p>
+            {% endfor %}
         </section>
     </main>
     <footer>

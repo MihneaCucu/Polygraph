@@ -39,13 +39,13 @@ def check_sources(text):
     count = sum(phrase in text.lower() for phrase in unreliable_phrases)
     return count > 0
 
-def load_dataset(dataset_path):
+def load_dataset():
     # Determine the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Use the provided dataset_path or default to the script's directory
-    true_file = os.path.join(dataset_path or script_dir, "True.csv")
-    fake_file = os.path.join(dataset_path or script_dir, "Fake.csv")
+    true_file = os.path.join(script_dir, "True.csv")
+    fake_file = os.path.join(script_dir, "Fake.csv")
 
     # Read the CSV files
     true_df = pd.read_csv(true_file)
@@ -95,10 +95,10 @@ def predict_from_file(model, file_path):
     except FileNotFoundError:
         print("File not found")
 
-def predict_from_file_with_nlp(model, file_path):
+def predict_from_file_with_nlp(model, text):
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            text = f.read()
+        #with open(file_path, "r", encoding="utf-8") as f:
+        #    text = f.read()
         text = preprocess_text(text)
 
         # Model prediction
@@ -110,20 +110,24 @@ def predict_from_file_with_nlp(model, file_path):
         sentiment = analyze_sentiment(text)
         has_exaggeration = detect_exaggeration(text)
         lacks_sources = check_sources(text)
+        
+        output = []
 
-        print(f"Probabilities: REAL={probabilities[1] * 100:.2f}%, FAKE={probabilities[0] * 100:.2f}%")
-        print(f"Sentiment Polarity: {sentiment:.2f}")
-        print(f"Exaggeration Detected: {'Yes' if has_exaggeration else 'No'}")
-        print(f"Lacks Reliable Sources: {'Yes' if lacks_sources else 'No'}")
+        output.append(f"Probabilities: REAL={probabilities[1] * 100:.2f}%, FAKE={probabilities[0] * 100:.2f}%")
+        output.append(f"Sentiment Polarity: {sentiment:.2f}")
+        output.append(f"Exaggeration Detected: {'Yes' if has_exaggeration else 'No'}")
+        output.append(f"Lacks Reliable Sources: {'Yes' if lacks_sources else 'No'}")
 
         threshold = 0.70  # Probability threshold
         if prob >= threshold:
             if prediction == 1:
-                print(f"The news is likely REAL ({prob*100:.2f}%)")
+                output.append(f"The news is likely REAL ({prob*100:.2f}%)")
             else:
-                print(f"The news is likely FAKE ({prob*100:.2f}%)")
+                output.append(f"The news is likely FAKE ({prob*100:.2f}%)")
         else:
-            print(f"The prediction is uncertain. Probability is too low ({prob*100:.2f}%).")
+            output.append(f"The prediction is uncertain. Probability is too low ({prob*100:.2f}%).")
+        
+        return output
     except FileNotFoundError:
         print("The .txt file was not found.")
 

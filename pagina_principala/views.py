@@ -1,7 +1,6 @@
 import sys, os
 from newspaper import Article
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .forms import FeedbackForm, TextAnalysisForm
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -9,6 +8,8 @@ sys.path.append(project_root)
 
 from utils.comparare import search_trusted_news, compare_with_trusted_news, notify_user
 from utils.frecventa_cuvinte import analiza_text, procentaje_cuvinte, comparare_cuvinte, construieste_dict_comune
+from utils.clasificare import load_dataset, train_model, predict_from_file_with_nlp
+from utils.identificator_bias import review
 
 API_KEY = "d8252bbbbe28439abf4d9739288dde30"
 
@@ -58,8 +59,11 @@ def result_view(request):
     
     if not input_type or not content:
         return redirect('analysis')  # Redirect back if session data is missing
-    
+        
     if input_type == 'url':
+        # Incredere sursa din baza de date
+        incredere_sursa = review(content)
+        # Descarcare continut text articol
         print("Se descarca continutul articolului din URL...")
         article = Article(content)
         article.download()
@@ -67,31 +71,41 @@ def result_view(request):
         text = article.text
     else:
         text = content
+        incredere_sursa = "Ati introdus un text anonim si nu un link. Sursa necunoscuta"
     
-    # comparare frecvente
-    '''
+    # Frecventa cuvinte/ cuvinte cheie   
     propozitii = []
-    text = article.text
     dict_cuvinte = analiza_text(text, propozitii)
     procentaje_cuvinte(dict_cuvinte)
     dict_comune = construieste_dict_comune()
-    #comparare_cuvinte(dict_cuvinte, dict_comune)
-    '''
+    query, frecventa = comparare_cuvinte(dict_cuvinte, dict_comune)
     
-    query = text[:100]
-    print(query)
-
+    # Comparare cu surse de incredere
     print("Searching for trusted news...")
-    trusted_articles = search_trusted_news(API_KEY, "President Donald TRump")
+    trusted_articles = search_trusted_news(API_KEY, query)
 
     if trusted_articles:
         print("Comparing with trusted news...")
         similarity = compare_with_trusted_news(content, trusted_articles)
-        notify_user(similarity)
+        comparare_stiri = notify_user(similarity)
     else:
-        print("No trusted articles found.")
+        comparare_stiri = "No trusted articles found."
     
-    # Process the input_type and content
-    print(f"Se proceseaza {input_type}: {content[:100]}")
+    # Clasificare in functie de model
+    print("Loading model...")
+    data = load_dataset()
+    model = train_model(data)
+
+    print("\nAnalysing input...")
+    predictie_stire = predict_from_file_with_nlp(model, text)
+    print(predictie_stire)
     
-    return render(request, 'pagina_principala/result.html', {'input_type': input_type, 'content': content, 'text': text})
+    # Afisare tip de continut folosit
+    print(f"S-a folosit {input_type}: {content[:100]}")
+    
+    return render(
+            request, 
+            'pagina_principala/result.html', 
+            {'input_type': input_type, 'incredere_sursa': incredere_sursa, 'text': text[:200], 
+            'frecventa': frecventa, 'comparare_stiri': comparare_stiri, 'predictie_stire': predictie_stire}
+            )
