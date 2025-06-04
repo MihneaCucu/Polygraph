@@ -10,6 +10,7 @@ import os
 import sys
 import string
 import joblib
+import time
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.ensemble import RandomForestClassifier
@@ -157,17 +158,54 @@ def predict_from_file_with_nlp(model, file_path):
     except FileNotFoundError:
         print("The .txt file was not found.")
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Use: python Clasificare.py <path_to_dataset> <file.txt>")
-        sys.exit(1)
+def compare_embedding_speeds(sample_size=100):
+    """
+    Compare embedding generation speed for TF-IDF, spaCy, and SentenceTransformer.
+    """
+    # Load dataset
+    true_df = pd.read_csv('/Users/mihneacucu/Documents/MDS/True.csv')
+    fake_df = pd.read_csv('/Users/mihneacucu/Documents/MDS/Fake.csv')
+    df = pd.concat([true_df, fake_df]).reset_index(drop=True)
+    texts = df['text'].astype(str).apply(preprocess_text).tolist()[:sample_size]
 
-    dataset_path = sys.argv[1]
-    txt_file_path = sys.argv[2]
-    print("Loading dataset...")
-    data = load_dataset(dataset_path)
-    print("Training model (TF-IDF)...")
-    model = train_model(data)
-    print("\nClassifying input file...")
-    predict_from_file_with_nlp(model, txt_file_path)
-    print("\nDone.")
+    # TF-IDF
+    tfidf = TfidfVectorizer()
+    start = time.time()
+    tfidf_embeddings = tfidf.fit_transform(texts)
+    tfidf_time = time.time() - start
+    print(f"TF-IDF embedding time for {sample_size} samples: {tfidf_time:.4f} seconds")
+
+    # spaCy
+    nlp = spacy.load('en_core_web_sm')
+    start = time.time()
+    spacy_embeddings = np.array([nlp(text).vector for text in texts])
+    spacy_time = time.time() - start
+    print(f"spaCy embedding time for {sample_size} samples: {spacy_time:.4f} seconds")
+
+    # SentenceTransformer
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    start = time.time()
+    st_embeddings = model.encode(texts, show_progress_bar=False)
+    st_time = time.time() - start
+    print(f"SentenceTransformer embedding time for {sample_size} samples: {st_time:.4f} seconds")
+
+    print("\nSummary:")
+    print(f"TF-IDF: {tfidf_time:.4f}s, spaCy: {spacy_time:.4f}s, SentenceTransformer: {st_time:.4f}s")
+
+# Exemplu de rulare:
+compare_embedding_speeds(100)
+
+# if __name__ == "__main__":
+#     if len(sys.argv) < 3:
+#         print("Use: python Clasificare.py <path_to_dataset> <file.txt>")
+#         sys.exit(1)
+#
+#     dataset_path = sys.argv[1]
+#     txt_file_path = sys.argv[2]
+#     print("Loading dataset...")
+#     data = load_dataset(dataset_path)
+#     print("Training model (TF-IDF)...")
+#     model = train_model(data)
+#     print("\nClassifying input file...")
+#     predict_from_file_with_nlp(model, txt_file_path)
+#     print("\nDone.")
