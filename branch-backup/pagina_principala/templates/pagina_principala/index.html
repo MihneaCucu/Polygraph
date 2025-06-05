@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polygraph - Home</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+    <header>
+        <h1>Bine ati venit - Polygraph</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Analizeaza continutul</h2>
+            <p>Folositi uneltele noastre de detectare a stirilor false.</p>
+            <a href="/analyze/" class="button">Analizeaza o stire</a>
+        </section>
+        <section>
+            <h2>Feedback</h2>
+            <p>Apreciem orice fel de feedback! Va incurajam sa ne spuneti ce putem imbunatati!</p>
+            <form action="{% url 'feedback' %}" method="get">
+                <a href="/feedback/" class="button">Trimite un formular de feedback</a>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Polygraph. All rights reserved.</p>
+    </footer>
+    <img src="{% static 'images/logo.png' %}" alt="Logo Polygraph" class="logo">
+</body>
+</html>

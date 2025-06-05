@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polygraph</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <script src="{% static 'js/text_script.js' %}"></script>
+</head>
+<body>
+    <header>
+        <h1>Analiza textului</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Foloseste uneltele noastre pentru a testa credibilitatea stirilor pe care le vezi.</h2>
+        </section>
+        <section>
+            <div class="toggle-buttons mb-3">
+                <button type="button" class="btn btn-primary" onclick="toggleInput('text')">Text Input</button>
+                <button type="button" class="btn btn-secondary" onclick="toggleInput('url')">URL Input</button>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Hidden input type tracker -->
+                <input type="hidden" id="input-type" name="input_type" value="text">
+                
+                <!-- Text Input Group -->
+                <div id="text-input" class="input-group">
+                    <textarea 
+                        name="text_content" 
+                        class="form-control {% if form.text_content.errors %}is-invalid{% endif %}" 
+                        placeholder="Enter your text here"
+                        rows="15"
+                        cols="75">{{ form.text_content.value|default:'' }}</textarea>
+                    <div class="invalid-feedback">
+                        {{ form.text_content.errors|first }}
+                    </div>
+                </div>
+                
+                <!-- URL Input Group (hidden by default) -->
+                <div id="url-input" class="input-group" style="display: none;">
+                    <input type="url" 
+                        name="url_content" 
+                        class="form-control {% if form.url_content.errors %}is-invalid{% endif %}" 
+                        placeholder="https://example.com" 
+                        value="{{ form.url_content.value|default:'' }}">
+                    <div class="invalid-feedback">
+                        {{ form.url_content.errors|first }}
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-success mt-3">Process Content</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Polygraph. All rights reserved.</p>
+    </footer>
+    <img src="{% static 'images/logo.png' %}" alt="Logo Polygraph" class="logo">
+</body>
+</html>
