@@ -4,38 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polygraph - Home</title>
-    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <title>Polygraph - News Verification Platform</title>
+    <!-- Base styles for all pages -->
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <!-- Home page specific styles -->
+    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="{% static 'js/script.js' %}"></script>
+    <!-- Favicon implementations -->
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
-    <header>
-        <h1>Bine ati venit - Polygraph</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a href="/contact/">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Analizeaza continutul</h2>
-            <p>Folositi uneltele noastre de detectare a stirilor false.</p>
-            <a href="/analyze/" class="button">Analizeaza o stire</a>
-        </section>
-        <section>
-            <h2>Feedback</h2>
-            <p>Apreciem orice fel de feedback! Va incurajam sa ne spuneti ce putem imbunatati!</p>
-            <form action="{% url 'feedback' %}" method="get">
-                <a href="/feedback/" class="button">Trimite un formular de feedback</a>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Polygraph. All rights reserved.</p>
-    </footer>
-    <img src="{% static 'images/logo.png' %}" alt="Logo Polygraph" class="logo">
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="{% static 'images/logo.png' %}" alt="Polygraph Logo" class="logo">
+                <div class="header-text">
+                    <h1>Bine ați venit - <span class="highlight">Polygraph</span></h1>
+                    <p>Platformă avansată de verificare a știrilor</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/" class="active">Acasă</a></li>
+                    <li><a href="/about/">Despre Noi</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="feature-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0056b3" width="48px" height="48px">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
+                        </svg>
+                    </div>
+                    <h2>Analizează conținutul</h2>
+                    <p>Folosiți uneltele noastre avansate de detectare a știrilor false și a dezinformării.</p>
+                    <a href="/analyze/" class="button primary">Analizează o știre</a>
+                </div>
+            </section>
+
+            <section class="feature-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" width="48px" height="48px">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
+                        </svg>
+                    </div>
+                    <h2>Feedback</h2>
+                    <p>Apreciem feedback-ul dumneavoastră! Ajutați-ne să îmbunătățim serviciile noastre.</p>
+                    <a href="/feedback/" class="button secondary">Trimite feedback</a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Polygraph. Toate drepturile rezervate.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Twitter">t</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
