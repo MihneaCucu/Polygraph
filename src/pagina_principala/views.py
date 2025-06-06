@@ -65,6 +65,8 @@ def result_view(request):
     if input_type == 'url':
         # Incredere sursa din baza de date
         incredere_sursa = review(content)
+        if incredere_sursa is None:
+            incredere_sursa = "Baza noastră de date nu a găsit această sursă"
         # Descarcare continut text articol
         print("Se descarca continutul articolului din URL...")
         article = Article(content)
@@ -73,7 +75,7 @@ def result_view(request):
         text = article.text
     else:
         text = content
-        incredere_sursa = "Ati introdus un text anonim si nu un link. Sursa necunoscuta"
+        incredere_sursa = "Ați introdus un text anonim și nu un link. Sursă necunoscută"
     
     # Frecventa cuvinte/ cuvinte cheie   
     propozitii = []

@@ -35,7 +35,7 @@ def prefix_lookup(source_name, bias_map):
     for key in bias_map.keys():
         if key.startswith(source_name):
             lista = bias_map[key]
-            return (f"The source {source_name} has a {lista[0]} bias from {lista[1]} reviews with an accuracy of {lista[2]} and a confidence level of {lista[4]}")
+            return (f"The source {source_name} has a {lista[0]} bias from {lista[1]} reviews with an accuracy of {lista[2]} and a confidence level of {lista[4]}%")
             found_source = True
             break
     if found_source == False:

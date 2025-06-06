@@ -4,53 +4,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polygraph - Rezultat analiza</title>
-    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <title>Rezultate Analiză - Polygraph</title>
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/result.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
-    <header>
-        <h1>Rezultatele analizei</h1>
-    </header>
-    <main>
-        <section>
-            
-            <p>Folositi uneltele noastre de detectare a stirilor false.</p>
-            
-        </section>
-        <section>
-            <h1>Articolul:</h1>
-            <p>{{ text }}...</p>
-        </section>
-        <section>
-            <h1>Incredere sursa:</h1>
-            <p>{{ incredere_sursa }}</p>
-        </section>
-        <section>
-            <h1>Cele mai utilizate cuvinte din articol:</h1>
-            {% for item in frecventa %}
-                <p>{{ item }}</p>
-            {% endfor %}
-        </section>
-        <section>
-            <h1>Comparare cu alte stiri din surse de incredere:</h1>
-            <p>{{ comparare_stiri }}</p>
-        </section>
-        <section>
-            <h1>Clasificare Fake News/Real News folosind AI:</h1>
-            {% for item in predictie_stire %}
-                <p>{{ item }}</p>
-            {% endfor %}
-        </section>
-        <section>
-            <p><a href="/analyze">Inapoi</a></p>
-            <p><a href="/">Acasa</a></p>
-            <p></p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Polygraph. All rights reserved.</p>
-    </footer>
-    <img src="{% static 'images/logo.png' %}" alt="Logo Polygraph" class="logo">
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="{% static 'images/logo.png' %}" alt="Polygraph Logo" class="logo">
+                <div class="header-text">
+                    <h1>Rezultate <span class="highlight">Analiză</span></h1>
+                    <p>Detalii despre credibilitatea conținutului analizat</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Acasă</a></li>
+                    <li><a href="/analyze/">Analiză Text</a></li>
+                    <li><a href="/about/">Despre Noi</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="results-container">
+            <section class="summary-card">
+                <div class="summary-content">
+                    <h2>Rezumat Analiză</h2>
+                    <div class="summary-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0056b3" >
+                                    <path d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <h3>Încredere Sursă</h3>
+                            <div class="confidence-level">
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" style="width: {{ incredere_sursa }}%;"></div>
+                                </div>
+                                <span class="confidence-value">{{ incredere_sursa }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" >
+                                    <path d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
+                                </svg>
+                            </div>
+                            <h3>Clasificare AI</h3>
+                            {% for item in predictie_stire %}
+                                <div class="ai-classification">
+                                    {{ item }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="article-section">
+                <div class="section-header">
+                    <h2>Articol Analizat</h2>
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0056b3" >
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <p>{{ text }}...</p>
+                </div>
+            </section>
+
+            <section class="analysis-section">
+                <div class="section-header">
+                    <h2>Detalii Analiză</h2>
+                    <div class="section-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" >
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <h3>Frecvență Cuvinte</h3>
+                        <div class="word-cloud">
+                            {% for item in frecventa %}
+                                <span class="word-tag">{{ item }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-card">
+                        <h3>Comparare Cu Surse Credibile</h3>
+                        <div class="comparison-result">
+                            <p>{{ comparare_stiri }}</p>
+                        </div>
+                        <div class="source-icons">
+                            <div class="source-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#0056b3" >
+                                    <path d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                                </svg>
+                            </div>
+                            <div class="source-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#28a745" >
+                                    <path d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="actions-section">
+                <h2>Acțiuni</h2>
+                <div class="action-buttons">
+                    <a href="/analyze/" class="button secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20px" height="20px" fill="white" style="margin-right: 8px;">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                        Analizează alt text
+                    </a>
+                    <a href="/" class="button primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white" style="margin-right: 8px;">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                        </svg>
+                        Pagina principală
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Polygraph. Toate drepturile rezervate.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Twitter">t</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>

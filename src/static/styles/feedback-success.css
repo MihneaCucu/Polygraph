@@ -1,4 +1,26 @@
 /* success.css */
+.header-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.header-text h1 {
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: var(--dark);
+    margin-bottom: 5px;
+}
+
+.header-text p {
+    color: var(--gray);
+    font-size: 1.1rem;
+}
+
+/* Main Content */
+
 .success-container {
     max-width: 800px;
     margin: 0 auto;
