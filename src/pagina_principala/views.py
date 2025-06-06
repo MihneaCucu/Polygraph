@@ -1,4 +1,6 @@
 import sys, os
+import joblib
+from pathlib import Path
 from newspaper import Article
 from django.shortcuts import render, redirect
 from .forms import FeedbackForm, TextAnalysisForm
@@ -8,7 +10,7 @@ sys.path.append(project_root)
 
 from utils.comparare import search_trusted_news, compare_with_trusted_news, notify_user
 from utils.frecventa_cuvinte import analiza_text, procentaje_cuvinte, comparare_cuvinte, construieste_dict_comune
-from utils.clasificare import load_dataset, train_model, predict_from_file_with_nlp
+from utils.clasificare import predict_from_file_with_nlp
 from utils.identificator_bias import review
 
 API_KEY = "d8252bbbbe28439abf4d9739288dde30"
@@ -89,12 +91,11 @@ def result_view(request):
         similarity = compare_with_trusted_news(content, trusted_articles)
         comparare_stiri = notify_user(similarity)
     else:
-        comparare_stiri = "No trusted articles found."
+        comparare_stiri = "No trusted articles found."  
     
     # Clasificare in functie de model
-    print("Loading model...")
-    data = load_dataset()
-    model = train_model(data)
+    model_path = Path(__file__).resolve().parent.parent / "pagina_principala" / "ai_models" / "model_clasificare_0.joblib"
+    model = joblib.load(model_path)
 
     print("\nAnalysing input...")
     predictie_stire = predict_from_file_with_nlp(model, text)

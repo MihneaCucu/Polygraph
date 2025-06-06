@@ -84,7 +84,7 @@ def comparare_cuvinte(dict_cuv, dict_comune):
     s = ""
     freq = []
     for (key, value) in sorted_items[:5]:
-        freq.append(f"{key}, appears with a factor of {value}")
+        freq.append(f"{key}, appears with a factor of {value:,.2f}")
     for i in range(4):
         s += sorted_items[i][0] + " OR "
     s += sorted_items[4][0]
