@@ -350,3 +350,22 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+'''
+Exemple de comenzi corecte:
+Pentru a utiliza modelul Random Forest :
+python3 Clasificare.py predict trueNews2.txt random_forest
+
+Pentru modelul SVM:
+python3 Clasificare.py predict trueNews2.txt svm
+
+Pentru modelul Logistic Regression:
+python3 Clasificare.py predict trueNews2.txt logreg
+
+Pentru modelul Naive Bayes:
+python3 Clasificare.py predict trueNews2.txt nb
+
+Pentru modelul BERT (dacă a fost antrenat anterior):
+python3 Clasificare.py predict trueNews2.txt bert
+'''
