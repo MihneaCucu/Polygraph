@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import IncredereSursa, RezultatAnaliza, Feedback, GlobalThreshold, AllsidesData, UnigramFreq
+from .models import IncredereSursa, RezultatAnaliza, Feedback, GlobalThreshold
+from .models import AllsidesData, UnigramFreq, FormSubmission
 
 class IncredereSursaAdmin(admin.ModelAdmin):
     list_display = ('nume', 'domain', 'scor_incredere', 'bias', 'last_update')
@@ -24,6 +25,9 @@ class FeedbackAdmin(admin.ModelAdmin):
     search_fields = ('feedback_user',)
     list_filter = ('creat_la',)
 
+class FormSubmissionAdmin(admin.ModelAdmin):
+    list_display = ('form_data', 'created_at')
+
 class GlobalThresholdAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         # Prevent creating new instances (only 1 allowed)
@@ -41,3 +45,4 @@ admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(GlobalThreshold, GlobalThresholdAdmin)
 admin.site.register(AllsidesData, AllsidesDataAdmin)
 admin.site.register(UnigramFreq, UnigramFreqAdmin)
+admin.site.register(FormSubmission, FormSubmissionAdmin)

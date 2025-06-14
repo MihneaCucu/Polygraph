@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import JSONField
+import json
 
 # Create your models here.
 
@@ -101,3 +102,14 @@ class UnigramFreq(models.Model):
     class Meta:
         managed = False  
         db_table = 'pagina_principala_unigram_freq'
+
+
+class FormSubmission(models.Model):
+    form_data = models.TextField()  # Will store JSON as text
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_data(self):
+        return json.loads(self.form_data)
+
+    def __str__(self):
+        return f"Submisie la at {self.created_at}"

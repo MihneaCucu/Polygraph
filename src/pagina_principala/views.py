@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import FeedbackForm, TextAnalysisForm
-from .models import GlobalThreshold, AllsidesData
+from .models import GlobalThreshold, AllsidesData, FormSubmission
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(project_root)
@@ -31,6 +31,10 @@ def feedback_view(request):
         if form.is_valid():
             form.save()
             form.send_email()
+            json_data = json.dumps(form.cleaned_data)
+            submission = FormSubmission.objects.create(
+                form_data=json_data
+            )
             return redirect('feedback-success')
     else:
         form = FeedbackForm()
