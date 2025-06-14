@@ -95,7 +95,7 @@ def predict_from_file(model, file_path):
     except FileNotFoundError:
         print("File not found")
 
-def predict_from_file_with_nlp(model, text):
+def predict_from_file_with_nlp(model, text, threshold):
     try:
         #with open(file_path, "r", encoding="utf-8") as f:
         #    text = f.read()
@@ -118,7 +118,7 @@ def predict_from_file_with_nlp(model, text):
         output.append(f"Exaggeration Detected: {'Yes' if has_exaggeration else 'No'}")
         output.append(f"Lacks Reliable Sources: {'Yes' if lacks_sources else 'No'}")
 
-        threshold = 0.70  # Probability threshold
+        # Probability threshold
         if prob >= threshold:
             if prediction == 1:
                 output.append(f"The news is likely REAL ({prob*100:.2f}%)")
@@ -144,4 +144,4 @@ if __name__ == "__main__":
     model = train_model(data)
 
     print("\nAnalysing input...")
-    predict_from_file_with_nlp(model, txt_file_path)
+    predict_from_file_with_nlp(model, txt_file_path, 0.7)

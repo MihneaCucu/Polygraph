@@ -43,3 +43,61 @@ class Feedback(models.Model):
     email = models.CharField(max_length=150)
     feedback_user = models.TextField(blank=True)
     creat_la = models.DateTimeField(auto_now_add=True)
+
+
+class GlobalThreshold(models.Model):
+    # Singleton manager pentru crearea unei singure instante
+    class Meta:
+        verbose_name = "Global Threshold"
+
+    id = models.AutoField(primary_key=True, editable=False)
+    threshold = models.FloatField(
+        default=0.5,  # Valoare default
+        help_text="Threshold pentru a defini procentul la care o sursa este considerata FAKE/REALA"
+    )
+
+    def save(self, *args, **kwargs):
+        # Fortam o singura instanta
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        # Primeste sau creeaza instanta
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
+
+class AllsidesData(models.Model):
+    id = models.AutoField(primary_key=True)
+    
+    news_source = models.CharField(max_length=255)
+    rating = models.CharField(max_length=255)
+    rating_num = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
+    agree = models.CharField(max_length=255)
+    disagree = models.CharField(max_length=255)
+    perc_agree = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+    editorial_review = models.CharField(max_length=255)
+    blind_survey = models.CharField(max_length=255)
+    third_party_analysis = models.CharField(max_length=255)
+    independent_research = models.CharField(max_length=255)
+    confidence_level = models.CharField(max_length=255)
+    twitter = models.CharField(max_length=255)
+    wiki = models.CharField(max_length=255)
+    facebook = models.CharField(max_length=255)
+    screen_name = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False  
+        db_table = 'pagina_principala_allsides_data'  
+
+
+class UnigramFreq(models.Model):
+    word = models.CharField(max_length=255)
+    count = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False  
+        db_table = 'pagina_principala_unigram_freq'

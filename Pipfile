@@ -11,6 +11,12 @@ pillow = "==10.3.0"
 newspaper4k = "*"
 scikit-learn = "*"
 textblob = "*"
+crispy-bootstrap5 = "*"
+django-crispy-forms = "*"
+joblib = "*"
+transformers = "*"
+sentencepiece = "*"
+torch = "*"
 
 [dev-packages]
 

@@ -15,10 +15,10 @@ def search_trusted_news(api_key, query):
         if not articles:
             print("No articles found for the given query.")
         #print(articles[0]["content"])
-        return [article["content"] for article in articles if article.get("content")]
+        return [article["content"] for article in articles if article.get("content")], articles
     else:
         print(f"Error fetching news: {response.status_code}, Response: {response.text}")
-        return []
+        return [], []
 
 def compare_with_trusted_news(input_text, trusted_articles):
     vectorizer = TfidfVectorizer().fit_transform([input_text] + trusted_articles)
@@ -31,6 +31,30 @@ def notify_user(similarity, threshold=0.7):
         return (f"The news is consistent with trusted sources (similarity: {similarity:2f}).")
     else:
         return (f"Significant differences found compared to trusted sources (similarity: {similarity:2f}).")
+    
+def suggest_alternative_sources(articles, max_sources=3):
+    # Prioritize diverse sources
+    seen_sources = set()
+    suggestions = []
+    for article in articles:
+        source = article.get("source", {}).get("name", "Unknown")
+        url = article.get("url", None)
+        title = article.get("title", "No title")
+        if source not in seen_sources and url:
+            suggestions.append((source, title, url))
+            seen_sources.add(source)
+        if len(suggestions) >= max_sources:
+            break
+    
+    output = ""
+    if suggestions:
+        output += "\nSuggested alternative trusted sources:\n"
+        for source, title, url in suggestions:
+            output += f"- {source}: {title}\n  {url}\n"
+    else:
+        output = "No alternative sources found."
+    
+    return suggestions
 
 if __name__ == "__main__":
     api_key = "d8252bbbbe28439abf4d9739288dde30"
