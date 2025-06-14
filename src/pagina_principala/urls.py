@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import index, analysis_view, feedback_view, feedback_success_view, result_view, get_summary, entry_list
+from .views import index, analysis_view, feedback_view, feedback_success_view, result_view
+from .views import get_summary, entry_list, about_view
 
 # Lista cu url-uri din pagina_principala app
 urlpatterns = [
@@ -10,5 +11,6 @@ urlpatterns = [
     path('news_result/', result_view, name="result"),
     path('get-summary/', get_summary, name='get_summary'),
     path('entries/', entry_list, name='entry-list'),
+    path('about/', about_view, name='about')
 ]
 

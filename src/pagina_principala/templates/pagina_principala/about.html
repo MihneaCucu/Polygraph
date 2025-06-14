@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despre Noi - Polygraph</title>
+    <!-- Base styles for all pages -->
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <!-- About page specific styles -->
+    <link rel="stylesheet" href="{% static 'styles/about.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Favicon implementations -->
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="{% static 'images/logo.png' %}" alt="Polygraph Logo" class="logo">
+                <div class="header-text">
+                    <h1>Despre Noi - <span class="highlight">Polygraph</span></h1>
+                    <p>Echipa din spatele platformei de verificare a știrilor</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Acasă</a></li>
+                    <li><a href="/analyze/">Analiză Text</a></li>
+                    <li><a href="/entries/">Arhivă Știri</a></li>
+                    <li><a href="/about/" class="active">Despre Noi</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="about-intro">
+                <div class="intro-content">
+                    <div class="intro-text">
+                        <h2>Misiunea Noastră</h2>
+                        <p>Polygraph a fost creat de trei studenți pasionați de informatică de la Universitatea din București, cu o singură misiune: combaterea dezinformării și promovarea adevărului în media online.</p>
+                        <p>În era digitală, știrile false se răspândesc cu viteza luminii. Am decis să folosim cunoștințele noastre în domeniul inteligenței artificiale și al tehnologiei pentru a crea o platformă care să ajute oamenii să distingă adevărul de minciună.</p>
+                    </div>
+                    <!--
+                    <div class="intro-image">
+                        <img src="{% static 'images/about-team.jpg' %}" alt="Echipa Polygraph">
+                    </div>
+                    -->
+                </div>
+            </section>
+
+            
+            <section class="technology-section">
+                <div class="tech-content">
+                    <!--
+                    <div class="tech-image">
+                        <img src="{% static 'images/tech-ai.jpg' %}" alt="Tehnologia din spatele Polygraph">
+                    </div>
+                    -->
+                    <div class="tech-text">
+                        <h2>Tehnologia din Spate</h2>
+                        <p>Polygraph folosește cele mai avansate tehnologii de inteligență artificială pentru analiza textului:</p>
+                        <ul>
+                            <li>Modele de procesare a limbajului natural (NLP)</li>
+                            <li>Algoritmi de învățare automată pentru detectarea tiparelor de dezinformare</li>
+                            <li>Sisteme de verificare în timp real cu surse de încredere</li>
+                            <li>Analiză semantică pentru înțelegerea contextului și a nuanțelor</li>
+                        </ul>
+                        <p>Platforma noastră este în continuă evoluție, îmbunătățindu-se constant pe baza feedback-ului utilizatorilor și a noilor cercetări în domeniu.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="call-to-action">
+                <h2>Alătură-te Luptei împotriva Dezinformării</h2>
+                <p>Fii parte a soluției! Folosește Polygraph pentru a verifica știrile și a împărtăși doar informații corecte.</p>
+                <div class="cta-buttons">
+                    <a href="/analyze/" class="button primary">Verifică o Știre</a>
+                    <!-- <a href="/contact/" class="button secondary">Contactează-ne</a> -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Polygraph. Toate drepturile rezervate.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Twitter">t</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

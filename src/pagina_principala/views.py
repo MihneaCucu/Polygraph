@@ -175,3 +175,6 @@ def entry_list(request):
         'page_obj': page_obj
     }
     return render(request, 'pagina_principala/entries.html', context)
+
+def about_view(request):
+    return render('request', 'pagina_principala/about.html')
